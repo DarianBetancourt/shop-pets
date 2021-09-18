@@ -4,3 +4,4 @@
 - ```git clone git@github.com:Team-Developers-totti/ShoppingDosBichos.git```
 - ```cd ShoppingDosBichos/```
 - ```npm install```
+- ```npm run dev```

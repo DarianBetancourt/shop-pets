@@ -3,6 +3,10 @@ const app = express();
 const mongoose = require('mongoose');
 const port = 3000
 
+const mongoUrl = 'mongodb+srv://bemjo:bemjo123@cluster0.pgbdm.mongodb.net/Clouster0?retryWrites=true&w=majority'
+mongoose.connect(mongoUrl, {useNewUrlParser: true})
+const db = mongoose.connection
+db.on('error', console.error.bind(console, 'Mongodb deu erro'))
 
 app.use(express.urlencoded({ extended: false}));
 

@@ -3,11 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 
 const ProductSchema = new Schema({
-  id: {
-    type: Number,
-    required: true
-  },
-
+  
   name: {
       type: String,
       required: true
@@ -18,23 +14,26 @@ const ProductSchema = new Schema({
       required: true
   },
 
-  photoUrl: {
-      type: String,
-      require: true
-  },
-
   category: {
     type: String,
     require: true
   },
 
+  tags: {
+    type: Array,
+  },
+
+  photoUrl: {
+    type: Array,
+  },
+
   stock:{
-    type: Boolean,
+    type: Number,
     require: true
   },
 
   expirationDate:{
-    type: FormData,
+    type: Date,
   },
 
   price: {

@@ -14,14 +14,15 @@ const petSchema = new mongoose.Schema({
         required: true
     },
     description: { 
-        color: String,
-		weight: Number,
-		size: String,
-		age:  String
+        color:{type: String},
+		weight:{type: Number},
+		size: {type: String},
+		age:  {type: String}
     },
-    photo_urls: [{
-        type: String,
-    }],
+    photo_urls: {
+        url:{type: String},
+        type: Array,
+    },
     status: {
         type: String,
         required: true

@@ -52,7 +52,7 @@ router.put("/:id",async(req,res)=>{
          res.status(400).send("error updating product")
      }
  })
- router.delete("/:id",async(req,res)=>{
+router.delete("/:id",async(req,res)=>{
     try {
         if(validator.isMongoId(req.params.id)){
             await Product.findByIdAndDelete(req.params.id)
@@ -67,6 +67,42 @@ router.put("/:id",async(req,res)=>{
          res.status(400).send("error")
      }
  })
-
+router.get("/add_stock/:old_stock/:id",async(req,res)=>{
+    try {
+        if(validator.isMongoId(req.params.id)){
+            let new_stock=parseInt(req.params.old_stock)+1;
+            const product = await Product.findByIdAndUpdate(req.params.id,{stock:new_stock}, {new: true,})
+            //res.status(200).send(product);
+            console.log("add success stock:"+product.stock)
+            res.status(200).send("add success stock:"+product.stock);
+        }
+        else{
+            res.status(400).send("invalid product id")
+            console.log("invalid product id")
+        }
+        
+     } catch (error) {
+         console.log(error)
+         res.status(400).send("error updating product")
+     }
+})
+router.get("/subtract_stock/:old_stock/:id",async(req,res)=>{
+    try {
+        if(validator.isMongoId(req.params.id)){
+            const product = await Product.findByIdAndUpdate(req.params.id,{stock:req.params.old_stock-1}, {new: true,})
+            //res.status(200).send(product);
+            console.log("add success stock:"+product.stock)
+            res.status(200).send("add success stock:"+product.stock);
+        }
+        else{
+            res.status(400).send("invalid product id")
+            console.log("invalid product id")
+        }
+        
+     } catch (error) {
+         console.log(error)
+         res.status(400).send("error updating product")
+     }
+})
 
 module.exports = router

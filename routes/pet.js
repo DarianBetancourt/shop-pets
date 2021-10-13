@@ -2,8 +2,9 @@ const express = require("express")
 const router = express.Router()
 const Pet = require("../models/pet")
 const validator =require('validator');
+const middle = require("../auth/authMiddleware") //middleware
 
-router.get("/",async(req,res)=>{
+router.get("/",middle.authMiddleware,async(req,res)=>{
     try {
         const pets = await Pet.find()
         if(pets){
@@ -17,7 +18,7 @@ router.get("/",async(req,res)=>{
     }
    
 })
-router.post("/",async(req,res)=>{
+router.post("/",middle.authMiddleware,async(req,res)=>{
     try {
         const pet = await Pet.create(req.body)
         res.status(200).send(pet)
@@ -26,7 +27,7 @@ router.post("/",async(req,res)=>{
         res.status(400).send("error adding pet")
     }
 })
-router.get("/findByStatus/:status",async(req,res)=>{
+router.get("/findByStatus/:status",middle.authMiddleware,async(req,res)=>{
     try {
         if(compare(req.params.status)){
             const pet = await Pet.find({status:req.params.status})
@@ -40,7 +41,7 @@ router.get("/findByStatus/:status",async(req,res)=>{
          res.status(400).send("error getting pet")
      }
 })
-router.get("/id:",async(req,res)=>{
+router.get("/id:",middle.authMiddleware,async(req,res)=>{
     try {
         if(validator.isMongoId(req.params.id)){
             const pet = await Pet.findById(req.params.id)
@@ -54,7 +55,7 @@ router.get("/id:",async(req,res)=>{
          res.status(400).send("error getting pet")
      }
 })
-router.put("/:id",async(req,res)=>{
+router.put("/:id",middle.authMiddleware,async(req,res)=>{
     try {
         if(validator.isMongoId(req.params.id)){
             const pet = await Pet.findByIdAndUpdate(req.params.id, req.body, {new: true})
@@ -69,7 +70,7 @@ router.put("/:id",async(req,res)=>{
          res.status(400).send("error updating pet")
      }
 })
-router.delete("/:id",async(req,res)=>{
+router.delete("/:id",middle.authMiddleware,async(req,res)=>{
     try {
         if(validator.isMongoId(req.params.id)){
             await Pet.findByIdAndDelete(req.params.id)

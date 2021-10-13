@@ -4,10 +4,29 @@ const Product = require("../models/product")
 const Order = require("../models/order")
 const User = require("../models/user")
 const Pet = require("../models/pet")
-const validator =require('validator');
+const validator =require('validator')
 const bot = require("../telegram/bot")
+const middle = require("../auth/authMiddleware") //middleware
 
-router.get("/order/complete=:complete",async(req,res)=>{
+
+/* inventory, Products in stock and Pets availables*/
+router.get("/inventory",middle.authMiddleware, async(req,res)=>{
+    try {
+        /* Products in stock */
+        const products = await Product.find({stock:{$gt:0}})
+        /* Pets availables */
+        const pets = await Pet.find({status:"available"})
+        /* Make inventory */
+        const inventory={products:products,pets:pets}
+        res.status(200).json(inventory) 
+    } catch (error) {
+        res.status(400).send("error getting inventory")
+    }
+    
+})
+
+/* get Orders, complete (false) or complete (true) */
+router.get("/order/complete=:complete",middle.authMiddleware,async(req,res)=>{
     try {
         const orders = await Order.find({complete:req.params.complete})
         if(orders){
@@ -21,7 +40,8 @@ router.get("/order/complete=:complete",async(req,res)=>{
    
 })
 
-router.post("/order",async(req,res)=>{
+/* create new Order */
+router.post("/order",middle.authMiddleware,async(req,res)=>{
     try {
         let bool=false;
         /* Order */
@@ -75,7 +95,8 @@ router.post("/order",async(req,res)=>{
     }
 })
 
-router.get("/order/:id",async(req,res)=>{
+/* get Order by id */
+router.get("/order/:id",middle.authMiddleware,async(req,res)=>{
     try {
         if(validator.isMongoId(req.params.id)){
             const order = await Order.findById(req.params.id)
@@ -101,22 +122,9 @@ router.get("/order/:id",async(req,res)=>{
          res.status(400).send("error getting order")
      }
 })
-router.get("/order/:id/completed",async(req,res)=>{
-    try {
-        if(validator.isMongoId(req.params.id)){
-            const order = await order.findByIdAndUpdate(req.params.id,{complete:true}, {new: true,})
-            res.status(200).send({message:"order completed",order:order});
-        }
-        else{
-            res.status(400).send("invalid order id")
-        }
-        
-     } catch (error) {
-         console.log(error)
-         res.status(400).send("error updating order")
-     }
-})
-router.put("/order/:id",async(req,res)=>{
+
+/* update order by id */
+router.put("/order/:id",middle.authMiddleware,async(req,res)=>{
     try {
         if(validator.isMongoId(req.params.id)){
             const order = await order.findByIdAndUpdate(req.params.id, req.body, {new: true,})
@@ -131,7 +139,9 @@ router.put("/order/:id",async(req,res)=>{
          res.status(400).send("error updating order")
      }
 })
-router.delete("/order/:id",async(req,res)=>{
+
+/* delete order by id */
+router.delete("/order/:id",middle.authMiddleware,async(req,res)=>{
     try {
         if(validator.isMongoId(req.params.id)){
             await order.findByIdAndDelete(req.params.id)
@@ -144,6 +154,24 @@ router.delete("/order/:id",async(req,res)=>{
      } catch (error) {
          console.log(error)
          res.status(400).send("error")
+     }
+})
+
+/* Routes for Bot */
+    /* update an order by its id, as completed (complete = true)*/
+router.get("/order/:id/completed",async(req,res)=>{
+    try {
+        if(validator.isMongoId(req.params.id)){
+            const order = await order.findByIdAndUpdate(req.params.id,{complete:true}, {new: true,})
+            res.status(200).send({message:"order completed",order:order});
+        }
+        else{
+            res.status(400).send("invalid order id")
+        }
+        
+     } catch (error) {
+         console.log(error)
+         res.status(400).send("error updating order")
      }
 })
 

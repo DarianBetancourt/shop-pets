@@ -7,6 +7,11 @@ const routerUser = require("./routes/user")
 const routerPet = require("./routes/pet")
 const bot = require("./telegram/bot")
 require('dotenv/config');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+/* Documentation Swagger*/
+app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDocument));
 
 /* Coneccion MongoDB*/
 const port = process.env.PORT || 5000;

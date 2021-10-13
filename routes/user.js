@@ -55,7 +55,7 @@ router.get('/login', async (req, res) => {
     
     if (!user) {
       
-      return res.status(401).send("user not found")
+      return res.status(400).send("Invalid username/password supplied")
 
     }else{
         if(user.isValidPassword(password)){
@@ -85,11 +85,6 @@ router
             const users = await User.find({},{password:0}).sort({createAt : 'desc'})
             res.json(users) 
         })
-        /* .post( async( req , res , next ) => {
-            req.user = new User()
-            console.log(req.body.name)
-            next()
-        },save_edit("new")) */
 
 router
     .route("/:id")
@@ -123,10 +118,11 @@ function save_edit(path) {
             console.log(user); 
             user = await user.save();
             if(path === "new"){
-                res.status("200").send(`O usuario : "${user.name}" foi salvado com sucesso`)
-            }
+                res.status("200").send(`user saved successfully`)
+                /* res.status("200").send(`O usuario : "${user.name}" foi salvado com sucesso`) */            }
             else{
-                res.status("200").send(`O usuario : "${user.name}" foi actualizado com sucesso`)
+                res.status("200").send(`user updated successfully`)
+                /* res.status("200").send(`O usuario : "${user.name}" foi actualizado com sucesso`) */
             }
             
             

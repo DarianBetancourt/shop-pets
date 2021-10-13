@@ -2,8 +2,9 @@ const express = require("express")
 const router = express.Router()
 const validator = require("validator")
 const Product = require("../models/product")
+const middle = require("../auth/authMiddleware") //middleware
 
-router.get("/",async(req,res)=>{
+router.get("/",middle.authMiddleware,async(req,res)=>{
     try {
         const products = await Product.find()
         res.status(200).send(products)
@@ -13,7 +14,7 @@ router.get("/",async(req,res)=>{
     }
 })
 
-router.post("/",async(req,res)=>{
+router.post("/",middle.authMiddleware,async(req,res)=>{
    try {
         const product = await Product.create(req.body)
         res.status(200).send(product)
@@ -23,7 +24,7 @@ router.post("/",async(req,res)=>{
     }
 })
 
-router.get("/:id",async(req,res)=>{
+router.get("/:id",middle.authMiddleware,async(req,res)=>{
     try {
         if(validator.isMongoId(req.params.id)){
             const product = await Product.findById(req.params.id)
@@ -37,7 +38,7 @@ router.get("/:id",async(req,res)=>{
          res.status(400).send("error getting product")
      }
  })
-router.put("/:id",async(req,res)=>{
+router.put("/:id",middle.authMiddleware,async(req,res)=>{
     try {
         if(validator.isMongoId(req.params.id)){
             const product = await Product.findByIdAndUpdate(req.params.id, req.body, {new: true,})
@@ -52,7 +53,7 @@ router.put("/:id",async(req,res)=>{
          res.status(400).send("error updating product")
      }
  })
-router.delete("/:id",async(req,res)=>{
+router.delete("/:id",middle.authMiddleware,async(req,res)=>{
     try {
         if(validator.isMongoId(req.params.id)){
             await Product.findByIdAndDelete(req.params.id)
@@ -67,6 +68,7 @@ router.delete("/:id",async(req,res)=>{
          res.status(400).send("error")
      }
  })
+ /* Routes for Bot  */
 router.get("/add_stock/:old_stock/:id",async(req,res)=>{
     try {
         if(validator.isMongoId(req.params.id)){

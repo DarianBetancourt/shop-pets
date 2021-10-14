@@ -388,18 +388,12 @@
         ],
         "parameters": [
           {
-            "name": "api_key",
-            "in": "header",
-            "required": false,
-            "type": "string"
-          },
-          {
             "name": "petId",
             "in": "path",
             "description": "Pet id to delete",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string",
+            "format": "ObjectId"
           }
         ],
         "responses": {

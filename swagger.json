@@ -197,6 +197,15 @@
             "required": true,
             "type": "string",
             "format": "ObjectId"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/productCreate"
+            }
           }
         ],
         "responses": {
@@ -431,6 +440,15 @@
             "required": true,
             "type": "string",
             "format": "ObjectId"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PetCreate"
+            }
           }
         ],
         "responses": {

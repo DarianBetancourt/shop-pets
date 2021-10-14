@@ -14,7 +14,7 @@ const authMiddleware = async (req, res, next) => {
 
     if (!user) {
     
-        return res.send(401)
+        return res.status(401).send("Error")
     
     }else{
         

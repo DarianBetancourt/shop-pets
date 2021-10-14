@@ -101,7 +101,7 @@ router
         .put( middle.authMiddleware , async( req , res , next) => {
             req.user = await User.findById(req.params.id)
             next()
-        })
+        },save_edit("update"))
         .delete( middle.authMiddleware , async( req, res ) => {
             await User.findByIdAndDelete(req.params.id);
             res.send("User whit id:"+req.params.id+" deleted" )

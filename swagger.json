@@ -269,7 +269,7 @@
             "description": "Pet object that needs to be added to the store",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Pet"
+              "$ref": "#/definitions/PetCreate"
             }
           }
         ],
@@ -987,6 +987,53 @@
         "id": {
           "$ref": "#/definitions/id"
         },
+        "name": {
+          "type": "string",
+          "example": "doggie"
+        },
+        "type_pet": {
+          "type": "string",
+          "example": "dog"
+        },
+        "breed": {
+          "type": "string",
+          "example": "Pitbull"
+        },
+        "description": {
+          "$ref": "#/definitions/DescriptionPet"
+        },
+        "photo_urls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "in_adoption": {
+          "type": "boolean",
+          "example": false
+        },
+        "price": {
+          "type": "number",
+          "example": 1600
+        },
+        "status": {
+          "type": "string",
+          "description": "pet status in the store",
+          "enum": [
+            "available",
+            "pending",
+            "sold"
+          ]
+        }
+      }
+    },
+    "PetCreate": {
+      "type": "object",
+      "required": [
+        "name",
+        "photo_urls"
+      ],
+      "properties": {
         "name": {
           "type": "string",
           "example": "doggie"

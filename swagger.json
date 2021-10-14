@@ -5,8 +5,8 @@
     "version": "1.0.0",
     "title": "Shopping dos Bichos",
     "contact": {
-      "email": "shoppingdosbichos@gmail.com",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+      "email": "darianbetancourt8@gmail.com",
+      "url": "https://benjaminarruebarrena.github.io/pagina-desarrolladores/"
     }
   },
   "host": "localhost:3000",
@@ -14,7 +14,7 @@
   "tags": [
     {
       "name": "Shopping dos Bichos",
-      "description": "Everything about your Pets, and produts of wd",
+      "description": "",
       "externalDocs": {
         "description": "Find out more",
         "url": "https://github.com/Team-Developers-totti/ShoppingDosBichos"
@@ -1169,6 +1169,6 @@
   },
   "externalDocs": {
     "description": "Find out more about ShoppingDosBichos",
-    "url": "http://swagger.io"
+    "url": "https://github.com/Team-Developers-totti/ShoppingDosBichos"
   }
 }

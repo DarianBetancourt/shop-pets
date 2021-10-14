@@ -429,8 +429,8 @@
             "in": "path",
             "description": "ID of pet to return",
             "required": true,
-            "type": "integer",
-            "format": "int64"
+            "type": "string",
+            "format": "ObjectId"
           }
         ],
         "responses": {

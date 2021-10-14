@@ -496,7 +496,7 @@
             "description": "order placed for purchasing the pet",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/Order"
+              "$ref": "#/definitions/OrderCreate"
             }
           }
         ],
@@ -823,19 +823,65 @@
       "format": "ObjectId",
       "example": "507f191e810c19729de860ea"
     },
+    "items": {
+      "type": "object",
+      "properties": {
+        "item_id": {
+          "$ref": "#/definitions/id"
+        },
+        "quantity": {
+          "type": "number"
+        }
+      }
+    },
+    "OrderCreate": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "$ref": "#/definitions/id"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/items"
+          }
+        },
+        "shipDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "status": {
+          "type": "string",
+          "description": "Order Status",
+          "enum": [
+            "placed",
+            "approved",
+            "delivered"
+          ]
+        },
+        "complete": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "xml": {
+        "name": "Order"
+      }
+    },
     "Order": {
       "type": "object",
       "properties": {
         "id": {
           "$ref": "#/definitions/id"
         },
-        "petId": {
-          "type": "integer",
-          "format": "int64"
+        "user_id": {
+          "$ref": "#/definitions/id"
         },
-        "quantity": {
-          "type": "integer",
-          "format": "int32"
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/items"
+          }
         },
         "shipDate": {
           "type": "string",

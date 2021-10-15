@@ -41,7 +41,7 @@ router.get("/findByStatus/:status",middle.authMiddleware,async(req,res)=>{
          res.status(400).send("error getting pet")
      }
 })
-router.get("/id:",middle.authMiddleware,async(req,res)=>{
+router.get("/:id",middle.authMiddleware,async(req,res)=>{
     try {
         if(validator.isMongoId(req.params.id)){
             const pet = await Pet.findById(req.params.id)

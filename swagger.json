@@ -9,7 +9,7 @@
       "url": "https://benjaminarruebarrena.github.io/pagina-desarrolladores/"
     }
   },
-  "host": "localhost:3000",
+  "host": "shop-pets.herokuapp.com",
   "basePath": "/",
   "tags": [
     {
